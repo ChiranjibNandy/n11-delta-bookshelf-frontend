@@ -1,11 +1,19 @@
 import RegisterIcon from "@material-ui/icons/AccountCircle";
-import {Button, Stack, TextField} from "@mui/material";
-import axios from "../../core/axios";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
+import {
+  Button,
+  IconButton,
+  InputAdornment,
+  Stack,
+  TextField,
+} from "@mui/material";
 import {Formik} from "formik";
-import {useContext, useEffect} from "react";
+import {useContext, useEffect, useState} from "react";
+import env from "react-dotenv";
 import {object, string} from "yup";
 
 import {AppContext} from "../../App/App";
+import axios from "../../core/axios";
 import {APP_ACTIONS, USER_ENTRY_ACTIONS} from "../../shared/immutables";
 import {
   MIN_PASSWORD_LENGTH,
@@ -13,10 +21,12 @@ import {
   UserEntryState,
 } from "./UserEntry.constant";
 import styles from "./UserEntry.module.scss";
-import {motion} from "framer-motion";
 
 function LoginForm({userAction}) {
   const loginInitialValues = {email: "", password: ""};
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
   useEffect(() => {
     userAction({type: USER_ENTRY_ACTIONS.SET_TITLE, data: "Login"});
@@ -31,7 +41,7 @@ function LoginForm({userAction}) {
         onSubmit={(values, {setSubmitting}) => {
           setSubmitting(true);
           axios
-            .post("/login", {
+            .post(`${env.API_URL}/login`, {
               email: values.email,
               password: values.password,
             })

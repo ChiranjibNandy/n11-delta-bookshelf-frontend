@@ -2,6 +2,7 @@ import {Button, Stack, TextField} from "@mui/material";
 import {Formik} from "formik";
 import {useContext, useEffect} from "react";
 import {object, ref, string} from "yup";
+import env from "react-dotenv";
 
 import {AppContext} from "../../App/App";
 import axios from "../../core/axios";
@@ -12,7 +13,6 @@ import {
   UserEntryState,
 } from "./UserEntry.constant";
 import styles from "./UserEntry.module.scss";
-
 function SignUpForm({userAction}) {
   const signUpInitialValues = {
     name: "",
@@ -34,14 +34,14 @@ function SignUpForm({userAction}) {
         onSubmit={(values, {setSubmitting}) => {
           setSubmitting(true);
           axios
-            .post("/signup", {
+            .post(`${env.API_URL}/signup`, {
               name: values.name,
               email: values.email,
               password: values.password,
             })
             .then(() => {
               axios
-                .post("/login", {
+                .post(`${env.API_URL}/login`, {
                   email: values.email,
                   password: values.password,
                 })
