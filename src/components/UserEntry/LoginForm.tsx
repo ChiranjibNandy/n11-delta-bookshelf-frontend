@@ -13,6 +13,7 @@ import {
   UserEntryState,
 } from "./UserEntry.constant";
 import styles from "./UserEntry.module.scss";
+import {motion} from "framer-motion";
 
 function LoginForm({userAction}) {
   const loginInitialValues = {email: "", password: ""};
@@ -54,6 +55,7 @@ function LoginForm({userAction}) {
           <form className={styles.loginForm} onSubmit={handleSubmit}>
             <Stack spacing={2}>
               <TextField
+                className={styles.textField}
                 name="email"
                 label="Email"
                 size="small"
@@ -61,10 +63,11 @@ function LoginForm({userAction}) {
                 value={values.email}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                error={!!errors.email}
+                error={touched.email && !!errors.email}
                 helperText={touched.email && errors.email}
               />
               <TextField
+                className={styles.textField}
                 label="Password"
                 name="password"
                 size="small"
@@ -73,7 +76,7 @@ function LoginForm({userAction}) {
                 value={values.password}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                error={!!errors?.password}
+                error={touched.password && !!errors?.password}
                 helperText={touched.password && errors.password}
               />
               <Button
