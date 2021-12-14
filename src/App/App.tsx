@@ -12,6 +12,7 @@ import {
   BookList,
 } from "../components";
 import { IAppContext, RootReducer } from "../reducers";
+import { UserProfile } from "../components/UserProfile/UserProfile";
 import styles from "./App.module.scss";
 
 const initialAppState: IAppContext = {
@@ -39,6 +40,7 @@ function App() {
           <div className={styles.wrapper}>
             <Routes>
               <Route path="/" element={<Dashboard />} />
+              <Route path="/profile" element={<UserProfile />} />
               <Route path="/books/:id" element={<BookDetail />} />
               <Route path="/admin/home" element={<AdminHome />} />
               <Route path="/admin/users" element={<UserList />} />

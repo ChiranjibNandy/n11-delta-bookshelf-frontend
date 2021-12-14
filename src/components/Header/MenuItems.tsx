@@ -26,6 +26,9 @@ export const MenuItems = (isUserLoggedIn, isSuperAdmin, dispatchAction) => {
       title: "My Profile",
       show: isUserLoggedIn,
       icon: <AccountCircleIcon fontSize="small" />,
+      onClick: () => {
+        navigate('/profile');
+      },
     },
     {
       id: 2,
