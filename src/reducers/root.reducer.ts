@@ -1,9 +1,10 @@
-import {UserEntryState} from "../components/UserEntry";
-import {APP_ACTIONS} from "../shared/immutables";
+import { UserEntryState } from "../components/UserEntry";
+import { APP_ACTIONS } from "../shared/immutables";
 
 export interface IAppContext {
   searchText: string;
   isUserLoggedIn: boolean;
+  isSuperAdmin: boolean;
   userEntry: UserEntryState | null;
   open: boolean;
   token: {
@@ -17,10 +18,10 @@ const REFRESH_TOKEN = "refreshToken";
 
 export const RootReducer = (
   state: IAppContext,
-  action: {type: string; data?: any}
+  action: { type: string; data?: any }
 ) => {
-  const newState = {...state};
-  const {type, data} = action;
+  const newState = { ...state };
+  const { type, data } = action;
   switch (type) {
     case APP_ACTIONS.UPDATE_SEARCH_TEXT:
       newState.searchText = data;
@@ -35,11 +36,13 @@ export const RootReducer = (
       break;
     case APP_ACTIONS.LOGOUT:
       newState.isUserLoggedIn = false;
+      newState.isSuperAdmin = false;
       newState.token = {};
       localStorage.clear();
       break;
     case APP_ACTIONS.LOGIN:
       newState.isUserLoggedIn = true;
+      newState.isSuperAdmin = data.user.isSuperAdmin;
       newState.open = false;
       newState.token = {
         accessToken: data.token,
